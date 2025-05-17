@@ -1,15 +1,26 @@
-import prisma from '@/lib/prisma';
-import {ProductWithCategory} from "@/types/prisma";
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+type Product = {
+    id: number;
+    name: string;
+    description: string | null;
+    price: number;
+    categoryId: number | null;
+};
+
+type Category = {
+    id: number;
+    name: string;
+};
 
 export default async function Home() {
     try {
         const allProducts = await prisma.product.findMany({
             include: {
-                category: true // Додаємо інформацію про категорію
-            }
+                category: true,
+            },
         });
-
-        console.log('Отримані продукти:', allProducts);
 
         return (
             <div className="flex flex-col items-center p-8">
@@ -17,11 +28,8 @@ export default async function Home() {
 
                 {allProducts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
-                        {allProducts.map((product: ProductWithCategory) => (
-                            <div
-                                key={product.id}
-                                className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
-                            >
+                        {allProducts.map((product) => (
+                            <div key={product.id} className="border rounded-lg p-4 hover:shadow-lg transition-shadow">
                                 <h2 className="text-xl font-semibold">{product.name}</h2>
                                 <p className="text-gray-600">{product.category?.name}</p>
                                 <p className="text-blue-600 font-bold mt-2">
