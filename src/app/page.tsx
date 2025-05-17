@@ -1,22 +1,12 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
+import {Product, Category} from '@prisma/client';
 
-type Product = {
-    id: number;
-    name: string;
-    description: string | null;
-    price: number;
-    categoryId: number | null;
-};
+type ProductWithCategory = Product & { category: Category | null };
 
-type Category = {
-    id: number;
-    name: string;
-};
 
 export default async function Home() {
     try {
-        const allProducts = await prisma.product.findMany({
+        const allProducts: ProductWithCategory[] = await prisma.product.findMany({
             include: {
                 category: true,
             },
