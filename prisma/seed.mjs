@@ -1,13 +1,15 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from "@prisma/client";
+
 
 const prisma = new PrismaClient();
-
 
 async function main() {
     const categories = await prisma.category.createMany({
         data: [
             {name: 'Смартфони'},
             {name: 'Ноутбуки'},
+            {name: 'Побутова техніка'},
+            {name: 'Побутова техніка'},
             {name: 'Побутова техніка'}
         ],
         skipDuplicates: true
@@ -19,6 +21,16 @@ async function main() {
             {
                 name: 'iPhone 15 Pro',
                 price: 1099.99,
+                description: 'Флагманський смартфон Apple',
+                categoryId: 1
+            },     {
+                name: 'iPhone 15 ',
+                price: 990.99,
+                description: 'Флагманський смартфон Apple',
+                categoryId: 1
+            },     {
+                name: 'iPhone 13',
+                price: 500.99,
                 description: 'Флагманський смартфон Apple',
                 categoryId: 1
             },

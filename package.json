@@ -1,6 +1,5 @@
 {
   "name": "shop",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,7 +15,7 @@
     "reset-db": "prisma migrate reset && prisma db seed"
   },
   "prisma": {
-    "seed": "node --loader ts-node/esm prisma/seed.ts"
+    "seed": "node prisma/seed.mjs"
   },
   "dependencies": {
     "-": "^0.0.1",
