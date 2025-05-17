@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { Product } from '@prisma/client';
 
 export default async function Home() {
     try {
@@ -16,7 +17,7 @@ export default async function Home() {
 
                 {allProducts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
-                        {allProducts.map((product) => (
+                        {allProducts.map((product: any) => (
                             <div
                                 key={product.id}
                                 className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
