@@ -1,6 +1,10 @@
 import Link from "next/link";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/app/api/auth/[...nextauth]/options";
 
-export default function Header() {
+export default  async function Header() {
+    const session = await getServerSession(authOptions);
+
     return (
         <header className="grid grid-cols-8 m-3  ">
 
@@ -12,9 +16,15 @@ export default function Header() {
                 <Link href={"/catalog"}
                       className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
                 >Каталог</Link>
-                <Link href={"/login"}
-                      className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
-                >Вхід</Link>
+                {session ?
+                    (<Link href={"/profile"}
+                           className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
+                    >Мій профіль</Link>) :
+                    (
+                        <Link href={"/login"}
+                              className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
+                        >Вхід</Link>)}
+
 
             </div>
 

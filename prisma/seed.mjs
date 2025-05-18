@@ -8,8 +8,7 @@ async function main() {
             {name: 'Смартфони'},
             {name: 'Ноутбуки'},
             {name: 'Побутова техніка'},
-            {name: 'Побутова техніка'},
-            {name: 'Побутова техніка'}
+
         ],
         skipDuplicates: true
     })

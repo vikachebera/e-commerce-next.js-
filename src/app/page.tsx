@@ -28,6 +28,8 @@ export default async function Home() {
                                 {product.description && (
                                     <p className="mt-2 text-sm">{product.description}</p>
                                 )}
+                                <button className="bg-black text-white border-2 rounded-md p-2 m-2 flex ">Додати до кошика</button>
+
                             </div>
                         ))}
                     </div>

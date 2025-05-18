@@ -12,6 +12,9 @@ const config = {
     testEnvironment: 'jsdom',
     // Add more setup options before each test is run
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1', // 👈 підлаштуй під свою структуру
+    },
     preset: 'ts-jest',
     collectCoverage: true,
     collectCoverageFrom: [
