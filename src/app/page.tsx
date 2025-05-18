@@ -14,7 +14,7 @@ export default async function Home() {
 
         return (
             <div className="flex flex-col items-center p-8">
-                <h1 className="text-2xl font-bold mb-6">Список продуктів</h1>
+                <h1 className="text-2xl font-bold mb-6">Список товарів</h1>
 
                 {allProducts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
