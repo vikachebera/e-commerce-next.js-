@@ -42,7 +42,6 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* Контакти та соціальні мережі */}
                     <div>
                         <h3 className="text-lg font-semibold mb-4 text-gray-300">Контакти</h3>
                         <div className="space-y-3">
