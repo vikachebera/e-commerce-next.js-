@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
+import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/app/api/auth/[...nextauth]/options";
 
-export default  async function Header() {
+export default async function Header() {
     const session = await getServerSession(authOptions);
 
     return (
@@ -22,10 +22,12 @@ export default  async function Header() {
                         <Link href={"/login"}
                               className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
                         >Вхід</Link>)}
+                {session ? (<Link href={"/cart"}
+                                  className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
+                >Кошик</Link>) : (<Link href={"/login"}
+                                        className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
+                >Кошик</Link>)}
 
-                <Link href={"/cart"}
-                      className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
-                >Кошик</Link>
             </div>
 
         </header>

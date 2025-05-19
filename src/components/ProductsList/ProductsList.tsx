@@ -21,6 +21,10 @@ export default async function ProductsList() {
                         {allProducts.map((product) => (
                             <div key={product.id}
                                  className=" p-4 hover:shadow-lg transition-shadow bg-white">
+                                <img
+                                    src={product?.imageUrl ?? "/placeholder.jpg"}
+                                    alt={product?.name ?? "Product"}
+                                />
                                 <h2 className="text-xl font-semibold">{product.name}</h2>
                                 <p className="text-gray-600">{product.category?.name}</p>
                                 <p className="text-blue-600 font-bold mt-2">

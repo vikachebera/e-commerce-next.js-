@@ -15,7 +15,7 @@ export default function Carousel() {
     ];
 
     return (
-        <div className="w-full h-1/5">
+        <div className="w-full h-2/5">
             <Swiper
                 modules={[Navigation, Autoplay]}
                 spaceBetween={0}
