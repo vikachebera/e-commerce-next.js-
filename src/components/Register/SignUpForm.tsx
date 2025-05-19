@@ -77,7 +77,6 @@ return (
             </div>
             {state?.errors?.password && (
                 <div>
-                    <p>Password must:</p>
                     <ul>
                         {state.errors.password.map((error: string) => (
                             <li key={error}>- {error}</li>

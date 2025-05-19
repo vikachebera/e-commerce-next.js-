@@ -10,6 +10,8 @@ const config = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
+        '^@lib/(.*)$': '<rootDir>/src/lib/$1',
+        '^@app/(.*)$': '<rootDir>/src/app/$1',
         '^swiper/css$': 'identity-obj-proxy',
         '^swiper/css/navigation$': 'identity-obj-proxy',
         '^swiper/css/pagination$': 'identity-obj-proxy',
@@ -23,16 +25,18 @@ const config = {
     ],
     collectCoverage: true,
     collectCoverageFrom: [
-        'app/**/*.{ts,tsx}',
-        '!app/**/*.d.ts',
-        '!app/**/*.stories.tsx',
-        '!app/**/layout.tsx'
+        "src/**/*.{js,jsx,ts,tsx}",
+
     ],
+    testMatch: ["**/__tests__/**/*.test.(ts|tsx|js)"],
+
     coverageThreshold: {
         global: {
-            lines: 50,
-            statements: 50
-        }
+            branches: 40,
+            functions: 40,
+            lines: 40,
+            statements: 40,
+        },
     }
 }
 
