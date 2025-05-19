@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const nextJest = require('next/jest')
 
 /** @type {import('jest').Config} */
@@ -13,7 +14,9 @@ const config = {
     // Add more setup options before each test is run
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1', // 👈 підлаштуй під свою структуру
+        '^@/(.*)$': '<rootDir>/src/$1',
+        "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+
     },
     preset: 'ts-jest',
     collectCoverage: true,
