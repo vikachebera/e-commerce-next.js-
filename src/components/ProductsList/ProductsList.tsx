@@ -1,5 +1,6 @@
 import prisma from "@lib/prisma";
 import {Category, Product} from "@prisma/client";
+import AddToCart from "@/components/Buttons/AddToCart";
 
 type ProductWithCategory = Product & { category: Category | null };
 
@@ -28,10 +29,7 @@ export default async function ProductsList() {
                                 {product.description && (
                                     <p className="mt-2 text-sm">{product.description}</p>
                                 )}
-                                <button className="bg-black text-white border-2 rounded-md p-2 m-2 flex ">Додати до
-                                    кошика
-                                </button>
-
+                                <AddToCart productId={product.id}/>
                             </div>
                         ))}
                     </div>

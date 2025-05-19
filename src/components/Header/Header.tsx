@@ -23,7 +23,9 @@ export default  async function Header() {
                               className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
                         >Вхід</Link>)}
 
-
+                <Link href={"/cart"}
+                      className="px-6 py-2 rounded-md  transition-colors duration-300 text-white bg-black"
+                >Кошик</Link>
             </div>
 
         </header>
