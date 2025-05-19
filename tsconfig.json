@@ -22,8 +22,9 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@lib/*": ["src/lib/*"]
-
+      "@lib/*": ["src/lib/*"],
+      "swiper/css": ["node_modules/swiper/swiper.min.css"],
+      "swiper/css/*": ["node_modules/swiper/modules/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","types/**/*.d.ts"],

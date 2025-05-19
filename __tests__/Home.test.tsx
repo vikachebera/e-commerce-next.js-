@@ -1,4 +1,3 @@
-import {screen} from "@testing-library/dom";
 import {render} from "@testing-library/react";
 import Home from "@/app/page";
 
