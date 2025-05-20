@@ -3,7 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic'; // Якщо потрібно вимкнути кешування
+export const dynamic = 'force-dynamic';
 
 const handlers = {
     GET: async () => {

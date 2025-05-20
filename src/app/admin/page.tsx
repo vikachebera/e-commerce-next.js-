@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react";
+import {useState} from "react";
 import AdminHeader from "@/components/Header/AdminHeader";
 import Sidebar from "@/components/AdminDashboard/Sidebar/Sidebar";
+import ProductsManager from "@/components/AdminDashboard/ProductsManager";
 
 export default function AdminPage() {
     const [activeSection, setActiveSection] = useState("dashboard");
@@ -10,8 +11,8 @@ export default function AdminPage() {
         switch (activeSection) {
             // case "dashboard":
             //     return <Dashboard />;
-            // case "products":
-            //     return <ProductsManager />;
+            case "products":
+                return <ProductsManager/>;
             // case "categories":
             //     return <CategoriesManager />;
             // case "orders":
@@ -25,14 +26,14 @@ export default function AdminPage() {
 
     return (
         <div className="flex h-screen bg-gray-100">
-            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection}/>
 
             <div className="flex-1 overflow-auto">
                 {/*<AdminHeader activeSection={activeSection} />*/}
 
-                {/*<main className="p-6">*/}
-                {/*    {renderActiveSection()}*/}
-                {/*</main>*/}
+                <main className="p-6">
+                    {renderActiveSection()}
+                </main>
             </div>
         </div>
     );

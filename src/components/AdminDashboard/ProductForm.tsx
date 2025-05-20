@@ -5,7 +5,7 @@ interface Category {
     name: string;
 }
 
-interface Product {
+export interface Product {
     id?: number;
     name: string;
     description: string;
@@ -16,10 +16,11 @@ interface Product {
 }
 
 interface ProductFormProps {
-    product?: Product;
+    product?: Product | null;
     categories: Category[];
     onSubmit: (product: Product) => void;
     onCancel: () => void;
+    onSuccess: () => void;
 }
 
 export default function ProductForm({
@@ -27,34 +28,40 @@ export default function ProductForm({
                                         categories,
                                         onSubmit,
                                         onCancel,
+                                        onSuccess,
                                     }: ProductFormProps) {
     const [formData, setFormData] = useState<Product>({
-        id: product?.id || 0,
+        id: product?.id,
         name: product?.name || "",
         description: product?.description || "",
         price: product?.price || 0,
         stock: product?.stock || 0,
         imageUrl: product?.imageUrl || "",
-        categoryId: product?.categoryId || (categories[0]?.id || null),
+        categoryId: product?.categoryId ?? (categories[0]?.id || null),
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: name === "price" || name === "stock" ? parseFloat(value) : value,
+            [name]: name === "price" || name === "stock"
+                ? parseFloat(value)
+                : name === "categoryId"
+                    ? parseInt(value)
+                    : value,
         });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formData);
+        onSuccess();
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow">
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Назва</label>
+                <label className="block text-sm font-medium mb-1">Назва</label>
                 <input
                     type="text"
                     name="name"
@@ -66,7 +73,7 @@ export default function ProductForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Опис</label>
+                <label className="block text-sm font-medium mb-1">Опис</label>
                 <textarea
                     name="description"
                     value={formData.description}
@@ -78,7 +85,7 @@ export default function ProductForm({
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Ціна</label>
+                    <label className="block text-sm font-medium mb-1">Ціна</label>
                     <input
                         type="number"
                         name="price"
@@ -91,7 +98,7 @@ export default function ProductForm({
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Кількість</label>
+                    <label className="block text-sm font-medium mb-1">Кількість</label>
                     <input
                         type="number"
                         name="stock"
@@ -104,9 +111,8 @@ export default function ProductForm({
                 </div>
             </div>
 
-            {/* Зображення */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">URL зображення</label>
+                <label className="block text-sm font-medium mb-1">URL зображення</label>
                 <input
                     type="text"
                     name="imageUrl"
@@ -117,26 +123,33 @@ export default function ProductForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Категорія</label>
+                <label className="block text-sm font-medium mb-1">Категорія</label>
                 <select
                     name="categoryId"
                     value={formData.categoryId ?? ""}
                     onChange={handleChange}
                     className="w-full border rounded-md p-2"
                 >
-                    {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.name}
+                    {categories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                            {cat.name}
                         </option>
                     ))}
                 </select>
             </div>
 
-            <div className="flex justify-end space-x-2 pt-2">
-                <button type="button" onClick={onCancel}>
+            <div className="flex justify-end space-x-2">
+                <button
+                    type="button"
+                    onClick={onCancel}
+                    className="px-4 py-2 bg-gray-400 text-white rounded"
+                >
                     Скасувати
                 </button>
-                <button type="submit">
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                >
                     {product ? "Оновити" : "Створити"}
                 </button>
             </div>
