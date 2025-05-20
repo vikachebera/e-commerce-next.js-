@@ -8,6 +8,7 @@ import { useState } from "react";
 
 export default function GitHubGoogleProviders() {
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState("");
 
     const handleOAuthLogin = async (provider: "google" | "github") => {
@@ -31,7 +32,8 @@ export default function GitHubGoogleProviders() {
             } else {
                 router.push("/");
             }
-        } catch (e) {
+        } catch (error) {
+            console.log(error);
             setError("Не вдалося визначити роль користувача");
         }
     };

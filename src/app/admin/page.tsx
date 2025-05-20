@@ -1,6 +1,5 @@
 'use client'
 import {useState} from "react";
-import AdminHeader from "@/components/Header/AdminHeader";
 import Sidebar from "@/components/AdminDashboard/Sidebar/Sidebar";
 import ProductsManager from "@/components/AdminDashboard/ProductsManager";
 
