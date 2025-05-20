@@ -4,6 +4,11 @@ import { signIn } from 'next-auth/react';
 
 jest.mock('next-auth/react');
 
+jest.mock('next/navigation', () => ({
+    useRouter: () => ({
+        push: jest.fn(),
+    }),
+}));
 describe('Login component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -49,8 +54,7 @@ describe('Login component', () => {
             expect(signIn).toHaveBeenCalledWith('credentials', {
                 email: 'test@example.com',
                 password: 'password123',
-                redirect: true,
-                callbackUrl: '/',
+                redirect: false,
             });
         });
     });

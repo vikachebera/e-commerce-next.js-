@@ -53,7 +53,6 @@ describe('signup', () => {
 
 
     it('повинен повертати помилку при існуючому email', async () => {
-        // Налаштовуємо мок для findUnique
         mockPrisma.user.findUnique.mockResolvedValueOnce({
             id: 1,
             email: 'existing@example.com',
@@ -74,18 +73,19 @@ describe('signup', () => {
     });
 
     it('повинен успішно створювати нового користувача', async () => {
-        // Налаштовуємо моки
         mockPrisma.user.findUnique.mockResolvedValueOnce(null);
         mockPrisma.user.create.mockResolvedValueOnce({
             id: 1,
             email: 'new@example.com',
             name: 'Valid Name',
+            role: "USER",
         });
         mockBcryptHash.mockResolvedValueOnce('hashedpassword' as never);
 
         const formData = new FormData();
         formData.append('name', 'Valid Name');
         formData.append('email', 'new@example.com');
+        formData.append('role', 'USER');
         formData.append('password', 'validpassword');
 
         const result = await signup({}, formData);
@@ -96,6 +96,7 @@ describe('signup', () => {
             data: {
                 name: 'Valid Name',
                 email: 'new@example.com',
+                role: 'USER',
                 password: 'hashedpassword',
             },
         });
