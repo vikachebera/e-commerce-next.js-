@@ -1,11 +1,16 @@
 'use client';
-import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+import {signIn} from 'next-auth/react';
+import {useState} from 'react';
+import {useRouter} from "next/navigation";
+
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -13,16 +18,32 @@ export default function Login() {
         const res = await signIn('credentials', {
             email,
             password,
-            redirect: true,
-            callbackUrl:'/'
+            redirect: false,
         });
 
         if (res?.error) {
-            setError('Невірний email або пароль');
-        } else {
-            window.location.href = '/';
+            setError("Невірний email або пароль");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/user/me");
+            const user = await res.json();
+
+            if (user?.role === "ADMIN") {
+                router.push("/admin");
+            } else {
+                router.push("/");
+            }
+        } catch (err) {
+            console.log(err);
+            setError("Помилка при завантаженні ролі");
+        } finally {
+            setLoading(false);
         }
     };
+
 
     return (
         <form onSubmit={handleSubmit} className="bg-white mx-auto p-6 rounded-lg shadow w-3/6">
@@ -66,5 +87,5 @@ export default function Login() {
                 Увійти
             </button>
         </form>
-    );
+    )
 }

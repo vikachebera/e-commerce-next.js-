@@ -1,13 +1,45 @@
+"use client"
+
 import Link from "next/link";
-import {signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 
 export default function GitHubGoogleProviders() {
+    const router = useRouter();
+    const [error, setError] = useState("");
 
+    const handleOAuthLogin = async (provider: "google" | "github") => {
+        setError("");
+
+        const result = await signIn(provider, {
+            redirect: false,
+        });
+
+        if (result?.error) {
+            setError("Помилка авторизації через " + provider);
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/user/me");
+            const user = await res.json();
+
+            if (user?.role === "ADMIN") {
+                router.push("/admin");
+            } else {
+                router.push("/");
+            }
+        } catch (e) {
+            setError("Не вдалося визначити роль користувача");
+        }
+    };
     return (
         <> <Link href={"/register"}>Не зареєстровані? Зареєструватися</Link>
             <button
 
-                onClick={() => signIn('google')}
+                onClick={() => handleOAuthLogin("google")}
                 className="mt-6 flex items-center justify-center bg-white border border-gray-300 rounded-full w-1/5 py-2 px-4 shadow hover:shadow-md transition text-sm"
             >
                 <img
@@ -19,7 +51,9 @@ export default function GitHubGoogleProviders() {
                 />
                 Sign in with Google
             </button>
-            <button onClick={() => signIn('github')}
+            <button
+                onClick={() => handleOAuthLogin("github")
+                }
                     className="mt-6 flex items-center justify-center bg-white border border-gray-300 rounded-full w-1/5 py-2 px-4 shadow hover:shadow-md transition text-sm"
             >
                 <img

@@ -40,6 +40,7 @@ export async function signup(state: FormState, formData: FormData) {
             name,
             email,
             password: hashedPassword,
+            role: 'USER',
         },
     });
 
