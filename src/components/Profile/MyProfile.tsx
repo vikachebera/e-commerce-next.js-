@@ -112,7 +112,7 @@ export default function MyProfile() {
             {!isEditing ? (
                 <div className="space-y-4">
                     <div>
-                        <h3 className="text-sm font-medium text-gray-500">Ім'я</h3>
+                        <h3 className="text-sm font-medium text-gray-500">Ім&apos;я</h3>
                         <p className="mt-1 text-lg">{user.name || "Not specified"}</p>
                     </div>
 
@@ -146,7 +146,7 @@ export default function MyProfile() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Ім'я
+                        Ім&apos;я
                         </label>
                         <input
                             type="text"
