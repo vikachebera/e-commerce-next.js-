@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 
 
-
 export default function MyProfile() {
     const router = useRouter()
     const [user, setUser] = useState<User | null>(null)
@@ -33,7 +32,7 @@ export default function MyProfile() {
             const session = await sessionRes.json()
 
             if (!session?.user?.id) {
-                router.push('/signin')
+                router.push('/login')
                 return
             }
 
@@ -49,7 +48,7 @@ export default function MyProfile() {
             setIsLoading(false)
         } catch (error) {
             console.error("Error:", error)
-            setError("Failed to load user data. Please try again later.")
+            setError("Не вдалось завантажити данні")
             setIsLoading(false)
         }
     }
@@ -146,7 +145,7 @@ export default function MyProfile() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Ім&apos;я
+                            Ім&apos;я
                         </label>
                         <input
                             type="text"
@@ -201,8 +200,8 @@ export default function MyProfile() {
                                 setIsEditing(false);
                                 setFormData({
                                     name: user.name || "",
-                                    email: user.email,
-                                    password: user.password
+                                    email: user.email ?? "",
+                                    password: user.password ?? ""
                                 });
                             }}
                             className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition"

@@ -17,12 +17,12 @@ export async function GET(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    if (session.user.id !== resolvedParams.id) {
+    if (Number(session.user.id) !== Number(resolvedParams.id)) {
         return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     const user = await prisma.user.findUnique({
-        where: { id: Number(resolvedParams.id) },
+        where: { id: Number(resolvedParams.id )},
         select: {
             id: true,
             name: true,
@@ -58,7 +58,7 @@ export async function PUT(
     const data = await req.json();
 
     const updated = await prisma.user.update({
-        where: { id: Number(resolvedParams.id) },
+        where: { id: Number(resolvedParams.id )},
         data: {
             name: data.name,
             email: data.email,

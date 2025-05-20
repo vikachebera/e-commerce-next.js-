@@ -1,11 +1,13 @@
-import prisma from "../src/lib/prisma.ts";
+import {PrismaClient} from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 async function main() {
     const categories = await prisma.category.createMany({
         data: [
-            { name: "Смартфони" },
-            { name: "Ноутбуки" },
-            { name: "Побутова техніка" },
+            {name: "Смартфони"},
+            {name: "Ноутбуки"},
+            {name: "Побутова техніка"},
         ],
         skipDuplicates: true,
     });
@@ -46,7 +48,7 @@ async function main() {
 }
 
 async function createOrder() {
-    const userId = 1; // заміни на реального користувача
+    const userId = 2;
 
     const orderItemsData = [
         {

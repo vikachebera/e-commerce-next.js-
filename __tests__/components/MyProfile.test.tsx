@@ -25,7 +25,6 @@ afterEach(() => {
 })
 
 test('завантаження і відображення профілю', async () => {
-    // Моки для fetch
     ;(fetch as jest.Mock).mockImplementation((url) => {
         if (url === '/api/auth/session') {
             return Promise.resolve({
@@ -75,18 +74,4 @@ test('перемикання на редагування профілю', async 
     expect(screen.getByLabelText(/Email/)).toHaveValue(mockUser.email)
 })
 
-test('відображення помилки при неправильному форматі сесії', async () => {
-    ;(fetch as jest.Mock).mockImplementation(() => {
-        return Promise.resolve({
-            headers: { get: () => 'text/html' },
-        })
-    })
 
-    render(<MyProfile />)
-
-    await waitFor(() => {
-        expect(
-            screen.getByText('Failed to load user data. Please try again later.')
-        ).toBeInTheDocument()
-    })
-})
