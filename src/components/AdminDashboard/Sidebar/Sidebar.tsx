@@ -11,7 +11,6 @@ export default function Sidebar() {
         { name: "Products", href: "/admin/products" },
         { name: "Categories", href: "/admin/categories" },
         { name: "Orders", href: "/admin/orders" },
-        { name: "Users", href: "/admin/users" },
     ];
 
     return (
