@@ -25,11 +25,13 @@ export default function ProductsManager() {
     const handleAdd = () => {
         setEditingProduct(null);
         setShowForm(true);
+
     };
 
     const handleEdit = (product: Product) => {
         setEditingProduct(product);
         setShowForm(true);
+
     };
     const handleDelete = async (product: Product) => {
         const confirmed = confirm(`Are you sure you want to delete "${product.name}"?`);

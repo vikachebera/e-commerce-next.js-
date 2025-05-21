@@ -1,66 +1,39 @@
-import { LayoutGrid, Package, ShoppingCart, Users, Settings, LogOut } from "lucide-react";
-import SidebarItem from "@/components/AdminDashboard/Sidebar/SidebarItem";
+'use client'
+import Link from "next/link";
+import {usePathname} from "next/navigation";
+import clsx from "clsx";
 
- interface SessionInterface {
-     activeSection: string;
-     setActiveSection: (section: string) => void;
- }
-export default function Sidebar({ activeSection, setActiveSection }:SessionInterface) {
+export default function Sidebar() {
+    const pathname = usePathname();
+
+    const navItems = [
+        { name: "Dashboard", href: "/admin" },
+        { name: "Products", href: "/admin/products" },
+        { name: "Categories", href: "/admin/categories" },
+        { name: "Orders", href: "/admin/orders" },
+        { name: "Users", href: "/admin/users" },
+    ];
+
     return (
-        <div className="w-64 bg-white shadow-md">
+        <aside className="w-64 bg-white shadow-md p-4">
             <div className="p-4 border-b">
                 <h1 className="text-xl font-bold">Адмін панель</h1>
             </div>
-            <nav className="p-2">
-                <ul className="space-y-1">
-                    <SidebarItem
-                        icon={<LayoutGrid size={20} />}
-                        title="Дашборд"
-                        isActive={activeSection === "dashboard"}
-                        onClick={() => setActiveSection("dashboard")}
-                    />
-                    <SidebarItem
-                        icon={<Package size={20} />}
-                        title="Товари"
-                        isActive={activeSection === "products"}
-                        onClick={() => setActiveSection("products")}
-                    />
-                    <SidebarItem
-                        icon={<LayoutGrid size={20} />}
-                        title="Категорії"
-                        isActive={activeSection === "categories"}
-                        onClick={() => setActiveSection("categories")}
-                    />
-                    <SidebarItem
-                        icon={<ShoppingCart size={20} />}
-                        title="Замовлення"
-                        isActive={activeSection === "orders"}
-                        onClick={() => setActiveSection("orders")}
-                    />
-                    <SidebarItem
-                        icon={<Users size={20} />}
-                        title="Користувачі"
-                        isActive={activeSection === "users"}
-                        onClick={() => setActiveSection("users")}
-                    />
-                    <li className="pt-4 mt-4 border-t">
-                        <SidebarItem
-                            icon={<Settings size={20} />}
-                            title="Налаштування"
-                            onClick={() => {}}
-                        />
-                    </li>
-                    <li>
-                        <SidebarItem
-                            icon={<LogOut size={20} />}
-                            title="Вийти"
-                            className="text-red-600"
-                            onClick={() => {}}
-                        />
-                    </li>
-                </ul>
+            <nav className="space-y-2">
+                {navItems.map((item) => (
+                    <Link
+                        key={item.name}
+                        href={item.href}
+                        className={clsx(
+                            "block px-4 py-2 rounded hover:bg-gray-200",
+                            pathname === item.href && "bg-blue-100 font-semibold"
+                        )}
+                    >
+                        {item.name}
+                    </Link>
+                ))}
             </nav>
-        </div>
+        </aside>
     );
 }
 
