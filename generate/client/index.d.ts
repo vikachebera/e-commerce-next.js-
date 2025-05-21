@@ -256,7 +256,7 @@ export class PrismaClient<
     * Example usage:
     * ```ts
     * // Fetch zero or more OrderItems
-    * const orderItems = await prisma.orderItem.findMany()
+    * const items = await prisma.orderItem.findMany()
     * ```
     */
   get orderItem(): Prisma.OrderItemDelegate<ExtArgs, ClientOptions>;
@@ -4872,7 +4872,7 @@ export namespace Prisma {
   }
 
   /**
-   * Product.orderItems
+   * Product.items
    */
   export type Product$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
@@ -7127,7 +7127,7 @@ export namespace Prisma {
   }
 
   /**
-   * Order.orderItems
+   * Order.items
    */
   export type Order$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
@@ -7519,10 +7519,10 @@ export namespace Prisma {
      * @param {OrderItemFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all OrderItems
-     * const orderItems = await prisma.orderItem.findMany()
+     * const items = await prisma.orderItem.findMany()
      * 
      * // Get first 10 OrderItems
-     * const orderItems = await prisma.orderItem.findMany({ take: 10 })
+     * const items = await prisma.orderItem.findMany({ take: 10 })
      * 
      * // Only select the `id`
      * const orderItemWithIdOnly = await prisma.orderItem.findMany({ select: { id: true } })

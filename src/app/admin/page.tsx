@@ -2,24 +2,22 @@
 import {useState} from "react";
 import ProductsManager from "@/components/AdminDashboard/ProductsManager";
 import CategoryManager from "@/components/AdminDashboard/CategoryManager";
+import OrderManager from "@/components/AdminDashboard/OrderManager";
 
 export default function AdminPage() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [activeSection, setActiveSection] = useState("dashboard");
 
     const renderActiveSection = () => {
         switch (activeSection) {
-            // case "dashboard":
-            //     return <Dashboard />;
             case "products":
                 return <ProductsManager/>;
             case "categories":
                 return <CategoryManager/>;
-            // case "orders":
-            //     return <OrdersManager />;
-            // case "users":
-            //     return <UsersManager />;
-            // default:
-            //     return <Dashboard />;
+            case "orders":
+                return <OrderManager/>;
+            default:
+                return <ProductsManager />;
         }
     };
 
@@ -27,8 +25,6 @@ export default function AdminPage() {
         <div className="flex h-screen bg-gray-100">
 
             <div className="flex-1 overflow-auto">
-                {/*<AdminHeader activeSection={activeSection} />*/}
-
                 <main className="p-6">
                     {renderActiveSection()}
                 </main>

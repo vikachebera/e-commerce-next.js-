@@ -16,7 +16,6 @@ export default function AdminHeader() {
                 <button
                     className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-md transition"
                     onClick={() => {
-                        // TODO: реалізувати логіку виходу
                         console.log("Logout clicked");
                     }}
                 >
