@@ -1,6 +1,6 @@
 import Categories from "@/components/Categories/Categories";
 import Carousel from "@/components/Carousel/Carousel";
-import ProductsList from "@/components/ProductsList/ProductsList";
+import AllProducts from "@/components/ProductsList/AllProducts";
 
 export default async function Home() {
 
@@ -10,7 +10,7 @@ export default async function Home() {
                 <Categories/>
                 <div className="flex flex-col items-center p-8 col-span-10 border-solid border-l-1 border-l-gray-500">
                     <Carousel/>
-                    <ProductsList/>
+                    <AllProducts/>
                 </div>
             </main>
         </>
