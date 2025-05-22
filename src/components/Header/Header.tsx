@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import {getServerSession} from "next-auth/next";
+import {authOptions} from "@/app/api/auth/[...nextauth]/options";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
 
     return (
         <header className="grid grid-cols-8 m-3 h-1/5">
-            <div className="col-span-6 font-bold text-xl p-3">Tech Space</div>
+            <Link href='/' className="col-span-6 font-bold text-xl p-3">
+                <div >Tech Space</div>
+            </Link>
             <div className="col-span-2 flex items-end space-x-4 gap-4">
                 <Link
                     href={"/catalog"}
