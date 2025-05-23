@@ -11,12 +11,6 @@ export default async function Header() {
                 <div >Tech Space</div>
             </Link>
             <div className="col-span-2 flex items-end space-x-4 gap-4">
-                <Link
-                    href={"/catalog"}
-                    className="px-6 py-2 rounded-md transition-colors duration-300 text-white bg-black"
-                >
-                    Каталог
-                </Link>
 
                 {session ? (
                     <Link

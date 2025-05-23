@@ -16,6 +16,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
 
     return (
         <div className="p-6">
+
             <CategoryProducts category={category}/>
         </div>
     )

@@ -2,11 +2,20 @@
 import {useEffect, useState} from "react";
 import {Category, Product} from "@prisma/client";
 import ProductList from "@/components/Blocks/ProductList";
+import LoadingSpinner from "@/components/Loader/LoadingSpinner";
+import {SortOption, FilterOptions} from "@/types/filter";
+import FiltersPanel from "@/components/Filter/FiltersPanel";
 
 export default function CategoryProducts({category}: { category: Category }) {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [sortOption, setSortOption] = useState<SortOption>("price-asc");
+    const [filters, setFilters] = useState<FilterOptions>({
+        minPrice: undefined,
+        maxPrice: undefined,
+        inStock: false,
+    });
 
 
     useEffect(() => {
@@ -21,8 +30,16 @@ export default function CategoryProducts({category}: { category: Category }) {
             setError(null);
 
             try {
-                const response = await fetch(`/api/categories/${category.id}/products`);
+                const params = new URLSearchParams();
 
+                if (filters.minPrice) params.append("minPrice", String(filters.minPrice));
+                if (filters.maxPrice) params.append("maxPrice", String(filters.maxPrice));
+                if (filters.inStock) params.append("inStock", "true");
+                if (sortOption) params.append("sort", sortOption);
+
+                const response = await fetch(
+                    `/api/categories/${category.id}/products?${params.toString()}`
+                );
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -39,20 +56,10 @@ export default function CategoryProducts({category}: { category: Category }) {
         };
 
         fetchData();
-    }, [category?.id]);
+    }, [category?.id, sortOption, filters]);
 
     if (loading) {
-        return (
-            <div className="p-4">
-                <h2 className="flex justify-center items-center text-xl font-bold mb-4 text-center">
-                    {category.name}
-                </h2>
-                <div className="flex justify-center items-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-                    <span className="ml-3">Завантаження...</span>
-                </div>
-            </div>
-        );
+        <LoadingSpinner/>
     }
 
     if (error) {
@@ -68,9 +75,31 @@ export default function CategoryProducts({category}: { category: Category }) {
         <div className="p-4">
             <h2 className="text-xl font-bold mb-4 text-center">{category.name}</h2>
             {products.length === 0 ? (
-                <p className="text-gray-500">Немає продуктів у цій категорії</p>
+                <>      <FiltersPanel
+                    sortOption={sortOption}
+                    filterOptions={filters}
+                    onSortChangeAction={setSortOption}
+                    onFilterChangeAction={setFilters}
+                    onResetFiltersAction={() =>
+                        setFilters({minPrice: undefined, maxPrice: undefined, inStock: false})
+                    }
+                />
+                    <p className="text-gray-500">Немає продуктів у цій категорії</p>
+
+                </>
             ) : (
-                <ProductList products={products}/>
+                <>
+                    <FiltersPanel
+                        sortOption={sortOption}
+                        filterOptions={filters}
+                        onSortChangeAction={setSortOption}
+                        onFilterChangeAction={setFilters}
+                        onResetFiltersAction={() =>
+                            setFilters({minPrice: undefined, maxPrice: undefined, inStock: false})
+                        }
+                    />
+                    <ProductList products={products}/>
+                </>
             )}
         </div>
     );
