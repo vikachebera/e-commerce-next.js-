@@ -25,7 +25,7 @@
 
 body {
     color: var(--foreground);
-    background: var(--background);
+    background: linear-gradient(to bottom, #bfdbfe, #60a5fa, #a78bfa);
     font-family: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 

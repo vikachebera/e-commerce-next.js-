@@ -1,23 +1,28 @@
 import prisma from "@lib/prisma";
 import { Category } from "@prisma/client";
+import Link from "next/link";
 
 export default async function Categories() {
-    const categories : Category[] = await prisma.category.findMany();
+    const categories: Category[] = await prisma.category.findMany();
+
     return (
-        <nav className="col-span-2   p-5">
-            <h2 className="text-gray-6900  text-lg font-medium mb-4">Категорії</h2>
-            <ul className="space-y-1">
-                {categories.map(category => (
+        <nav className="col-span-2 bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+            <ul className="space-y-2">
+                {categories.map((category) => (
                     <li key={category.id}>
-                        <a
+                        <Link
                             href={`/categories/${category.id}`}
-                            className="block py-2 px-3 text-gray-500 hover:text-gray-900 transition-colors duration-150"
+                            className={`
+                                flex items-center py-2 px-3 rounded-md transition-all duration-200
+                                text-gray-600 hover:text-indigo-600 hover:bg-indigo-50
+                                group
+                            `}
                         >
-                            {category.name}
-                        </a>
+                            <span className="font-medium">{category.name}</span>
+                        </Link>
                     </li>
                 ))}
             </ul>
         </nav>
-    )
+    );
 }

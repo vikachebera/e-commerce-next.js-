@@ -3,17 +3,23 @@ import Carousel from "@/components/Carousel/Carousel";
 import ProductsByCategories from "@/components/ProductsList/ProductsByCategories";
 
 export default async function Home() {
-
     return (
-        <>
-            <main className="grid grid-cols-12 bg-gray-50">
-                <Categories/>
-                <div className="flex flex-col items-center p-8 col-span-10 border-solid border-l-1 border-l-gray-500">
-                    <Carousel/>
-                    <ProductsByCategories/>
+        <main className="min-h-screen  ">
+            <div className="grid grid-cols-12 gap-6 max-w-7xl mx-auto px-10 sm:px-6 lg:px-10 py-10">
+                <div className="hidden md:block col-span-3">
+                    <Categories />
                 </div>
-            </main>
-        </>
-    );
 
+                <div className="col-span-12 md:col-span-9 space-y-8" >
+                    <section className="bg-transparent rounded-xl  overflow-hidden ">
+                        <Carousel />
+                    </section>
+                </div>
+
+                    <section className=" col-span-12  p-6 ">
+                        <ProductsByCategories />
+                    </section>
+            </div>
+        </main>
+    );
 }

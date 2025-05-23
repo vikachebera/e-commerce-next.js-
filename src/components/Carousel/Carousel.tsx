@@ -15,23 +15,27 @@ export default function Carousel() {
     ];
 
     return (
-        <div className="w-full h-2/5">
+        <div className="w-full h-[400px]"> {/* Додаємо фіксовану висоту */}
             <Swiper
                 modules={[Navigation, Autoplay]}
-                spaceBetween={0}
+                spaceBetween={20}
                 slidesPerView={1}
+                centeredSlides={true}
+                grabCursor={true}
                 navigation
                 autoplay={{ delay: 3000, disableOnInteraction: true }}
                 loop={true}
-                className="w-full  h-full"
+                className="w-full h-full rounded-xl overflow-hidden" /* Додаємо overflow-hidden */
             >
                 {images.map((src, i) => (
-                    <SwiperSlide key={i} className="w-full h-full">
-                        <img
-                            src={src}
-                            alt={`Slide ${i + 1}`}
-                            className="w-full h-full object-cover"
-                        />
+                    <SwiperSlide key={i}>
+                        <div className="w-full h-full flex items-center justify-center">
+                            <img
+                                src={src}
+                                alt={`Slide ${i + 1}`}
+                                className="w-full h-full object-cover rounded-xl"
+                            />
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>

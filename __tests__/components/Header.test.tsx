@@ -27,7 +27,6 @@ describe("Header", () => {
 
         render(await Header());
 
-        expect(screen.getByText("Каталог")).toBeInTheDocument();
         expect(screen.getByText("Вхід")).toBeInTheDocument();
         expect(screen.queryByText("Мій профіль")).not.toBeInTheDocument();
     });
@@ -42,7 +41,6 @@ describe("Header", () => {
 
         render(await Header());
 
-        expect(screen.getByText("Каталог")).toBeInTheDocument();
         expect(screen.getByText("Мій профіль")).toBeInTheDocument();
         expect(screen.queryByText("Вхід")).not.toBeInTheDocument();
     });

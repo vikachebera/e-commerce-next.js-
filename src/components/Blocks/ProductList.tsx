@@ -8,9 +8,9 @@ interface ProductListProps {
 
 export default function ProductList({ products }: ProductListProps) {
     return (
-        <div className="flex flex-row flex-wrap  w-full">
+        <div className="flex flex-row   w-full">
             {products.map((product) => (
-                <div key={product.id} className="w-1/5">
+                <div key={product.id} className="w-1/5 m-1">
                     <ProductCard product={product} />
                 </div>
             ))}

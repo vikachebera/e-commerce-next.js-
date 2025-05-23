@@ -13,7 +13,7 @@ export default async function ProductsByCategories() {
         });
 
         return (
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 ">
                 {categories.length > 0 ? (
                     <div className="space-y-12">
                         {categories.map((category) => (

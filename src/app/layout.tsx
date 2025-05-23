@@ -6,7 +6,7 @@ import  {authOptions} from "@/app/api/auth/[...nextauth]/options";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const session = await getServerSession(authOptions);
-    const isAdmin = session?.user?.role === "ADMIN"; // 👈 або інша логіка
+    const isAdmin = session?.user?.role === "ADMIN";
 
     return (
         <html lang="en">
