@@ -1,81 +1,106 @@
+"use client"
 export default function Footer() {
     return (
-        <footer className="bg-black text-white w-full mt-8">
-            <div className="container mx-auto px-6 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ml-10">
-                    <div >
-                        <h3 className="text-lg font-semibold mb-4 text-gray-300">Навігація</h3>
-                        <ul className="space-y-2">
-                            <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                    Головна
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                    Всі категорії
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                    Умови використання
-                                </a>
-                            </li>
+        <footer className="bg-gray-900 text-gray-300 w-full mt-16">
+            <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+                    <div>
+                        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Навігація</h3>
+                        <ul className="space-y-3">
+                            {['Головна', 'Всі категорії', 'Умови використання', 'Акції'].map((item) => (
+                                <li key={item}>
+                                    <a
+                                        href="#"
+                                        className="text-gray-400 hover:text-amber-400 transition-colors duration-300 text-base"
+                                    >
+                                        {item}
+                                    </a>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
                     <div>
-                        <h3 className="text-lg font-semibold mb-4 text-gray-300">Наші магазини</h3>
-                        <div className="space-y-3">
-                            <div className="text-gray-400">
-                                <p className="font-medium text-white">Київ</p>
-                                <p className="text-sm">вул. Житомирська 15</p>
+                        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Наші магазини</h3>
+                        <div className="space-y-4">
+                            {[
+                                {city: 'Київ', address: 'вул. Житомирська 15'},
+                                {city: 'Житомир', address: 'вул. Шевченка 45'},
+                                {city: 'Вінниця', address: 'вул. Петлюри 90'}
+                            ].map((shop, index) => (
+                                <div key={index} className="text-gray-400 group">
+                                    <p className="font-medium text-white group-hover:text-amber-400 transition-colors duration-300">
+                                        {shop.city}
+                                    </p>
+                                    <p className="text-sm mt-1 group-hover:text-gray-200 transition-colors duration-300">
+                                        {shop.address}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Контакти</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <p className="text-gray-400 hover:text-amber-400 transition-colors duration-300 cursor-pointer">
+                                    +380 (44) 123-45-67
+                                </p>
+                                <p className="text-gray-400 hover:text-amber-400 transition-colors duration-300 cursor-pointer mt-1">
+                                    info@example.com
+                                </p>
                             </div>
-                            <div className="text-gray-400">
-                                <p className="font-medium text-white">Житомир</p>
-                                <p className="text-sm">вул. Шевченка 45</p>
-                            </div>
-                            <div className="text-gray-400">
-                                <p className="font-medium text-white">Вінниця</p>
-                                <p className="text-sm">вул. Петлюри 90</p>
+                            <div className="pt-2">
+                                <p className="text-sm text-gray-300 mb-3">Соціальні мережі:</p>
+                                <div className="flex space-x-5">
+                                    {['Instagram', 'Facebook', 'Telegram'].map((social) => (
+                                        <a
+                                            key={social}
+                                            href="#"
+                                            className="text-gray-400 hover:text-amber-400 transition-colors duration-300 text-sm"
+                                        >
+                                            {social}
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 className="text-lg font-semibold mb-4 text-gray-300">Контакти</h3>
-                        <div className="space-y-3">
-                            <div className="text-gray-400">
-                                <p className="text-sm">+380 (44) 123-45-67</p>
-                                <p className="text-sm">info@example.com</p>
-                            </div>
-                            <div className="pt-3">
-                                <p className="text-sm text-gray-300 mb-2">Соціальні мережі:</p>
-                                <div className="flex space-x-4">
-                                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                        Instagram
-                                    </a>
-                                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                        Facebook
-                                    </a>
-                                </div>
-                            </div>
+                        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Розсилка</h3>
+                        <p className="text-gray-400 mb-4 text-sm">
+                            Підпишіться на наші оновлення та спеціальні пропозиції
+                        </p>
+                        <div className="flex">
+                            <input
+                                type="email"
+                                placeholder="Ваш email"
+                                className="px-4 py-2 w-full rounded-l-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
+                            />
+                            <button className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-r-md transition-colors duration-300">
+                                Підписатись
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-gray-700 mt-8 pt-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
-                        <p className="text-gray-400 text-sm">
-                            &copy; {new Date().getFullYear()} Всі права захищені
+                <div className="border-t border-gray-800 mt-12 pt-8">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
+                        <p className="text-gray-500 text-sm mb-4 md:mb-0">
+                            &copy; {new Date().getFullYear()} Всі права захищені.
                         </p>
-                        <div className="flex space-x-6 text-sm">
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                Політика конфіденційності
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
-                                Угода користувача
-                            </a>
+                        <div className="flex space-x-6">
+                            {['Політика конфіденційності', 'Угода користувача'].map((item) => (
+                                <a
+                                    key={item}
+                                    href="#"
+                                    className="text-gray-500 hover:text-amber-400 text-sm transition-colors duration-300"
+                                >
+                                    {item}
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>

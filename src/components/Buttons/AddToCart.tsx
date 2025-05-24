@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { Loader2, Check } from 'lucide-react';
+import {useState} from 'react';
+import {Loader2, Check} from 'lucide-react';
 
 type AddToCartProps = {
     productId: number;
     disabled?: boolean;
 };
 
-export default function AddToCart({ productId, disabled = false }: AddToCartProps) {
+export default function AddToCart({productId, disabled = false}: AddToCartProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -20,7 +20,7 @@ export default function AddToCart({ productId, disabled = false }: AddToCartProp
         try {
             const res = await fetch('/api/cart/add', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     productId: Number(productId),
                     quantity: 1,
@@ -30,7 +30,10 @@ export default function AddToCart({ productId, disabled = false }: AddToCartProp
             if (!res.ok) throw new Error("Помилка при додаванні до кошика");
 
             setIsSuccess(true);
-            setTimeout(() => setIsSuccess(false), 2000);
+            setTimeout(() => setIsSuccess(false), 1000);
+
+            window.dispatchEvent(new CustomEvent('cartUpdated'));
+
         } catch (err) {
             console.error(err);
             alert("Помилка при додаванні до кошика");
@@ -56,12 +59,12 @@ export default function AddToCart({ productId, disabled = false }: AddToCartProp
         >
             {isLoading ? (
                 <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin"/>
                     Додаємо...
                 </>
             ) : isSuccess ? (
                 <>
-                    <Check className="h-5 w-5" />
+                    <Check className="h-5 w-5"/>
                     Додано!
                 </>
             ) : (

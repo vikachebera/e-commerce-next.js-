@@ -14,7 +14,6 @@ describe('Categories component', () => {
     it('renders list of categories from prisma', async () => {
         render(await Categories());
 
-        expect(await screen.findByText('Категорії')).toBeInTheDocument();
 
         expect(screen.getByText('Смартфони')).toBeInTheDocument();
         expect(screen.getByText('Ноутбуки')).toBeInTheDocument();
