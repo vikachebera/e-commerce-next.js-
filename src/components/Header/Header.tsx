@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {LogOut, ShoppingCart, User} from "lucide-react";
+import { ShoppingCart, User} from "lucide-react";
 import type {Session} from "next-auth";
-import {signOut} from "next-auth/react";
 
 type CartItem = {
     id: number;
