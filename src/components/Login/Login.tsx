@@ -1,20 +1,19 @@
 'use client';
-import {signIn} from 'next-auth/react';
-import {useState} from 'react';
-import {useRouter} from "next/navigation";
-
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
         const res = await signIn('credentials', {
             email,
@@ -23,28 +22,29 @@ export default function Login() {
         });
 
         if (res?.error) {
-            setError("Невірний email або пароль");
+            setError('Невірний email або пароль');
             setLoading(false);
             return;
         }
 
         try {
-            const res = await fetch("/api/user/me");
-            const user = await res.json();
+            const userRes = await fetch('/api/user/me');
+            const user = await userRes.json();
 
-            if (user?.role === "ADMIN") {
-                router.push("/admin");
+            if (user?.role === 'ADMIN') {
+                router.replace('/admin');
             } else {
-                router.push("/");
+                window.location.href = '/';
+
             }
         } catch (err) {
-            console.log(err);
-            setError("Помилка при завантаженні ролі");
+            console.error(err);
+            setError('Помилка при завантаженні ролі');
         } finally {
             setLoading(false);
         }
-    };
 
+    };
 
     return (
         <form onSubmit={handleSubmit} className="bg-white mx-auto p-6 rounded-lg shadow w-3/6">
@@ -83,10 +83,11 @@ export default function Login() {
 
             <button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 mt-4 rounded-md"
             >
-                Увійти
+                {loading ? 'Зачекайте...' : 'Увійти'}
             </button>
         </form>
-    )
+    );
 }

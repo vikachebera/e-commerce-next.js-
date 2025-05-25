@@ -8,9 +8,9 @@ export default function Sidebar() {
 
     const navItems = [
         { name: "Dashboard", href: "/admin" },
-        { name: "Products", href: "/admin/products" },
-        { name: "Categories", href: "/admin/categories" },
-        { name: "Orders", href: "/admin/orders" },
+        { name: "Продукти", href: "/admin/products" },
+        { name: "Категорії", href: "/admin/categories" },
+        { name: "Замовлення", href: "/admin/orders" },
     ];
 
     return (

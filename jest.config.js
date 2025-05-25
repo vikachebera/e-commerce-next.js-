@@ -9,7 +9,10 @@ const config = {
     projects: [
         {
             displayName: 'server',
-            testMatch: ['**/__tests__/api/**/*.test.ts'],
+            testMatch: [
+                '**/__tests__/api/**/*.test.ts',
+                '**/__tests__/api/**/*.spec.ts'
+            ],
             testEnvironment: 'node',
             setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
             moduleNameMapper: {
@@ -47,24 +50,20 @@ const config = {
             transformIgnorePatterns: [
                 '/node_modules/(?!(swiper|ssr-window|dom7))'
             ],
-
         },
     ],
     collectCoverage: true,
     collectCoverageFrom: [
         "src/**/*.{js,jsx,ts,tsx}",
-
     ],
-
     coverageThreshold: {
         global: {
-            branches: 10,
-            functions: 10,
-            lines: 10,
-            statements: 10,
+            branches: 30,
+            functions: 30,
+            lines: 30,
+            statements: 30,
         },
     }
-
 }
 
 module.exports = createJestConfig(config)

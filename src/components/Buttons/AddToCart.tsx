@@ -1,16 +1,18 @@
 'use client';
 
-import {useState} from 'react';
-import {Loader2, Check} from 'lucide-react';
+import { useState } from 'react';
+import { Loader2, Check } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type AddToCartProps = {
     productId: number;
     disabled?: boolean;
 };
 
-export default function AddToCart({productId, disabled = false}: AddToCartProps) {
+export default function AddToCart({ productId, disabled = false }: AddToCartProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const router = useRouter();
 
     const handleAddToCart = async () => {
         if (disabled) return;
@@ -18,9 +20,17 @@ export default function AddToCart({productId, disabled = false}: AddToCartProps)
         setIsLoading(true);
 
         try {
+            const sessionRes = await fetch('/api/auth/session');
+            const sessionData = await sessionRes.json();
+
+            if (!sessionData?.user) {
+                router.push('/login?redirect=/product/' + productId);
+                return;
+            }
+
             const res = await fetch('/api/cart/add', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     productId: Number(productId),
                     quantity: 1,

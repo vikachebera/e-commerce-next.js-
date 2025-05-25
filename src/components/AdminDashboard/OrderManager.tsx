@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Order, OrderStatus } from "@prisma/client";
 import OrderForm from "@/components/AdminDashboard/OrderForm";
 
-interface FullOrder extends Order {
+ interface FullOrder extends Order {
     orderItems: {
         id?: number;
         productId: number;

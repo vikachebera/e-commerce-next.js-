@@ -2,7 +2,8 @@
 import {User} from "@prisma/client";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
-
+import {signOut} from "next-auth/react";
+import {LogOut} from "lucide-react";
 
 export default function MyProfile() {
     const router = useRouter()
@@ -86,131 +87,160 @@ export default function MyProfile() {
             router.refresh()
         } catch (error) {
             console.error("Failed to update user:", error)
-            setError("Failed to update profile. Please try again.")
+            setError("Не вдалось оновити профіль. Спробуйте ще раз.")
         } finally {
             setIsLoading(false)
         }
     }
 
     if (isLoading) {
-        return <div className="text-center py-8">Завантаження...</div>
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center py-8 text-lg">Завантаження...</div>
+            </div>
+        )
     }
 
     if (error) {
-        return <div className="text-center py-8 text-red-500">{error}</div>
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center py-8 text-red-500 text-lg max-w-md mx-auto p-4 bg-white rounded-lg shadow">
+                    {error}
+                </div>
+            </div>
+        )
     }
 
     if (!user) {
-        return <div className="text-center py-8">User not found</div>
-
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-center py-8 text-lg max-w-md mx-auto p-4 bg-white rounded-lg shadow">
+                    Користувача не знайдено
+                </div>
+            </div>
+        )
     }
+
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm">
-            <h2 className="text-2xl font-semibold mb-6">Мій профіль</h2>
-
-            {!isEditing ? (
-                <div className="space-y-4">
-                    <div>
-                        <h3 className="text-sm font-medium text-gray-500">Ім&apos;я</h3>
-                        <p className="mt-1 text-lg">{user.name || "Not specified"}</p>
-                    </div>
-
-                    <div>
-                        <h3 className="text-sm font-medium text-gray-500">Email</h3>
-                        <p className="mt-1 text-lg">{user.email}</p>
-                    </div>
-
-                    <div>
-                        <h3 className="text-sm font-medium text-gray-500">Пароль</h3>
-                        <p className="mt-1 text-lg">
-                            ********
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 className="text-sm font-medium text-gray-500">Member Since</h3>
-                        <p className="mt-1 text-lg">
-                            {new Date(user.createdAt).toLocaleDateString()}
-                        </p>
-                    </div>
-
+        <div className="min-h-screen  py-8 px-4">
+            <div className="max-w-2xl mx-auto space-y-6">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl font-bold text-gray-800">Мій профіль</h1>
                     <button
-                        onClick={() => setIsEditing(true)}
-                        className="mt-6 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+                        onClick={() => signOut({callbackUrl: '/'})}
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-md transition"
                     >
-                        Редагувати профіль
+                        <LogOut className="w-4 h-4"/>
+                        Вийти
                     </button>
                 </div>
-            ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                            Ім&apos;я
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
-                        />
-                    </div>
 
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Новий пароль
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
-                        />
-                    </div>
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                    {!isEditing ? (
+                        <div className="space-y-5">
+                            <div className="pb-4 border-b border-gray-100">
+                                <h3 className="text-sm font-medium text-gray-500">Ім&#39;я</h3>
+                                <p className="mt-1 text-lg font-medium">{user.name || "Не вказано"}</p>
+                            </div>
 
-                    <div className="flex space-x-3 pt-2">
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition disabled:opacity-50"
-                        >
-                            {isLoading ? "Збереження..." : "Зберегти зміни"}
-                        </button>
+                            <div className="pb-4 border-b border-gray-100">
+                                <h3 className="text-sm font-medium text-gray-500">Email</h3>
+                                <p className="mt-1 text-lg font-medium">{user.email}</p>
+                            </div>
 
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setIsEditing(false);
-                                setFormData({
-                                    name: user.name || "",
-                                    email: user.email ?? "",
-                                    password: user.password ?? ""
-                                });
-                            }}
-                            className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition"
-                        >
-                            Відмінити
-                        </button>
-                    </div>
-                </form>
-            )}
+                            <div className="pb-4 border-b border-gray-100">
+                                <h3 className="text-sm font-medium text-gray-500">Пароль</h3>
+                                <p className="mt-1 text-lg font-medium">••••••••</p>
+                            </div>
+
+                            <div>
+                                <h3 className="text-sm font-medium text-gray-500">Дата реєстрації</h3>
+                                <p className="mt-1 text-lg font-medium">
+                                    {new Date(user.createdAt).toLocaleDateString('uk-UA')}
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() => setIsEditing(true)}
+                                className="mt-6 w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                            >
+                                Редагувати профіль
+                            </button>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Ім&apos;я
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Новий пароль
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Залиште порожнім, щоб не змінювати"
+                                />
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row gap-3 pt-3">
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="flex-1 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+                                >
+                                    {isLoading ? "Збереження..." : "Зберегти зміни"}
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsEditing(false);
+                                        setFormData({
+                                            name: user.name || "",
+                                            email: user.email || "",
+                                            password: ''
+                                        });
+                                    }}
+                                    className="flex-1 px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                                >
+                                    Скасувати
+                                </button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

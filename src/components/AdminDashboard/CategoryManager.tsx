@@ -68,7 +68,7 @@ export default function CategoryManager() {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold">Categories</h2>
+                <h2 className="text-2xl font-semibold">Категорії</h2>
                 <button
                     onClick={handleAdd}
                     className="px-4 py-2 bg-blue-600 text-white rounded"
@@ -87,8 +87,8 @@ export default function CategoryManager() {
             <table className="min-w-full bg-white shadow rounded">
                 <thead>
                 <tr>
-                    <th className="px-4 py-2 text-left">Category</th>
-                    <th className="px-4 py-2 text-left">Actions</th>
+                    <th className="px-4 py-2 text-left">Категорія</th>
+                    <th className="px-4 py-2 text-left">Дії</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,13 +100,13 @@ export default function CategoryManager() {
                                 onClick={() => handleEdit(cat)}
                                 className="p-2 m-2 bg-green-500 text-white rounded"
                             >
-                                Edit
+                                Редагувати
                             </button>
                             <button
                                 onClick={() => handleDelete(cat)}
                                 className="p-2 m-2 bg-red-500 text-white rounded"
                             >
-                                Delete
+                                Видалити
                             </button>
                         </td>
                     </tr>

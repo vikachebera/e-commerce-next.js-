@@ -75,7 +75,7 @@ export default function ProductsManager() {
                     onClick={handleAdd}
                     className="px-4 py-2 bg-blue-600 text-white rounded"
                 >
-                    Add Product
+                    Додати продукт
                 </button>
             </div>
             {showForm ? (
@@ -90,10 +90,10 @@ export default function ProductsManager() {
                 <table className="min-w-full bg-white shadow rounded">
                     <thead>
                     <tr>
-                        <th className="px-4 py-2">Name</th>
-                        <th className="px-4 py-2">Price</th>
-                        <th className="px-4 py-2">Stock</th>
-                        <th className="px-4 py-2">Actions</th>
+                        <th className="px-4 py-2">Назва</th>
+                        <th className="px-4 py-2">Ціна</th>
+                        <th className="px-4 py-2">Наявність</th>
+                        <th className="px-4 py-2">Дії</th>
                     </tr>
                     </thead>
                     <tbody>

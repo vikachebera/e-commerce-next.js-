@@ -6,7 +6,7 @@ export default async function Categories() {
     const categories: Category[] = await prisma.category.findMany();
 
     return (
-        <nav className="col-span-2 bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+        <nav className="col-span-2 bg-blue-100 p-5 rounded-lg shadow-sm border border-gray-100">
             <ul className="space-y-2">
                 {categories.map((category) => (
                     <li key={category.id}>

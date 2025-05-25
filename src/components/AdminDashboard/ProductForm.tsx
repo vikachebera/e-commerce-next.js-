@@ -61,8 +61,9 @@ export default function ProductForm({
     return (
         <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow">
             <div>
-                <label className="block text-sm font-medium mb-1">Назва</label>
+                <label htmlFor='name' className="block text-sm font-medium mb-1">Назва</label>
                 <input
+                    id='name'
                     type="text"
                     name="name"
                     value={formData.name}
@@ -73,8 +74,9 @@ export default function ProductForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium mb-1">Опис</label>
+                <label htmlFor='description' className="block text-sm font-medium mb-1">Опис</label>
                 <textarea
+                    id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
@@ -85,9 +87,10 @@ export default function ProductForm({
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Ціна</label>
+                    <label htmlFor='price' className="block text-sm font-medium mb-1">Ціна</label>
                     <input
                         type="number"
+                        id="price"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
@@ -98,9 +101,10 @@ export default function ProductForm({
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Кількість</label>
+                    <label htmlFor='stock' className="block text-sm font-medium mb-1">Кількість</label>
                     <input
                         type="number"
+                        id="stock"
                         name="stock"
                         value={formData.stock}
                         onChange={handleChange}
@@ -112,9 +116,10 @@ export default function ProductForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium mb-1">URL зображення</label>
+                <label htmlFor='imageUrl' className="block text-sm font-medium mb-1">URL зображення</label>
                 <input
                     type="text"
+                    id="imageUrl"
                     name="imageUrl"
                     value={formData.imageUrl}
                     onChange={handleChange}
@@ -123,8 +128,9 @@ export default function ProductForm({
             </div>
 
             <div>
-                <label className="block text-sm font-medium mb-1">Категорія</label>
+                <label htmlFor='categoryId' className="block text-sm font-medium mb-1">Категорія</label>
                 <select
+                    id="categoryId"
                     name="categoryId"
                     value={formData.categoryId ?? ""}
                     onChange={handleChange}

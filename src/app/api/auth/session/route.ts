@@ -10,7 +10,6 @@ export async function GET() {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-
         return NextResponse.json(session)
     } catch (error) {
         console.log(error);

@@ -10,33 +10,30 @@ export default function GitHubGoogleProviders() {
     const router = useRouter();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState("");
-
     const handleOAuthLogin = async (provider: "google" | "github") => {
-        setError("");
+        const res = await signIn(provider, { redirect: false });
+        console.log("signIn response:", res);
 
-        const result = await signIn(provider, {
-            redirect: false,
-        });
-
-        if (result?.error) {
-            setError("Помилка авторизації через " + provider);
+        if (res?.error) {
+            setError(res.error);
             return;
         }
 
-        try {
-            const res = await fetch("/api/user/me");
-            const user = await res.json();
+        const userRes = await fetch("/api/user/me");
+        const user = await userRes.json();
+        console.log("User from API:", user);
 
-            if (user?.role === "ADMIN") {
-                router.push("/admin");
-            } else {
-                router.push("/");
-            }
-        } catch (error) {
-            console.log(error);
-            setError("Не вдалося визначити роль користувача");
+        if (user?.role === "ADMIN") {
+            console.log("Redirect to /admin");
+            router.replace("/admin");
+        } else if (user?.role === "USER") {
+            console.log("Redirect to /");
+            router.replace("/");
+        } else {
+            console.log("Unknown role, no redirect");
         }
     };
+
     return (
         <> <Link href={"/register"}>Не зареєстровані? Зареєструватися</Link>
             <button

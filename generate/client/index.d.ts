@@ -1334,7 +1334,7 @@ export namespace Prisma {
     next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
   ) => $Utils.JsPromise<T>
 
-  // tested in getLogLevel.test.ts
+  // tested in getLogLevel.GET_PUT.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
   /**

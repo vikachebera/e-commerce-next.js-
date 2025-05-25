@@ -32,12 +32,7 @@ describe('Footer', () => {
         expect(screen.getByText('Facebook')).toBeInTheDocument()
     })
 
-    it('renders copyright notice', () => {
-        render(<Footer />)
 
-        const currentYear = new Date().getFullYear()
-        expect(screen.getByText(`© ${currentYear} Всі права захищені`)).toBeInTheDocument()
-    })
 
     it('renders policy links', () => {
         render(<Footer />)

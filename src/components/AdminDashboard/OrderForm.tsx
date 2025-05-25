@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { OrderStatus, Product } from "@prisma/client";
 
-interface OrderItemInput {
+export interface OrderItemInput {
     id?: number;
     productId: number;
     quantity: number;

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {ShoppingCart, User} from "lucide-react";
+import {LogOut, ShoppingCart, User} from "lucide-react";
 import type {Session} from "next-auth";
+import {signOut} from "next-auth/react";
 
 type CartItem = {
     id: number;
@@ -65,11 +66,15 @@ export default function Header() {
 
                     <nav className="flex items-center space-x-2 sm:space-x-4">
                         {session?.user ? (
-                            <Link href="/profile"
-                                  className="flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-300 group">
+                            <>  <Link href="/profile"
+                                      className="flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-300 group">
                                 <User className="h-5 w-5 mr-1 group-hover:scale-110 transition-transform"/>
                                 <span className="hidden sm:inline">Профіль</span>
+
                             </Link>
+
+                            </>
+
                         ) : (
                             <Link href="/login"
                                   className="flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors duration-300 group">
@@ -98,3 +103,4 @@ export default function Header() {
         </header>
     );
 }
+

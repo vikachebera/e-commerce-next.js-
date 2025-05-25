@@ -42,9 +42,10 @@ export default function CategoryForm({
     return (
         <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow">
             <div>
-                <label className="block text-sm font-medium mb-1">Назва категорії</label>
+                <label htmlFor='name' className="block text-sm font-medium mb-1">Назва категорії</label>
                 <input
                     type="text"
+                    id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}

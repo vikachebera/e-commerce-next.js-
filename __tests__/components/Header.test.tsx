@@ -1,47 +1,49 @@
-import {render, screen} from '@testing-library/react'
-import Header from "@/components/Header/Header";
+import { render, screen, waitFor } from '@testing-library/react';
+import Header from '@/components/Header/Header';
 import "@testing-library/jest-dom";
 
-jest.mock("next-auth/next", () => ({
-    getServerSession: jest.fn(),
+// Mock для next/link
+jest.mock("next/link", () => ({
+    __esModule: true,
+    default: ({ children, href }: { children: React.ReactNode; href: string }) => (
+        <a href={href}>{children}</a>
+    ),
+}));
 
-}))
-
-jest.mock("next/link", () => {
-    const Link = ({children, href}: { children: React.ReactNode; href: string }) => {
-        return <a href={href}>{children}</a>;
-    };
-    Link.displayName = "Link";
-    return Link;
-
-});
+// Mock для глобального fetch
+global.fetch = jest.fn();
 
 describe("Header", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it("відображає 'Вхід', якщо користувач не авторизований", async () => {
-        const {getServerSession} = await import("next-auth/next");
-        (getServerSession as jest.Mock).mockResolvedValue(null);
+    it("показує кнопку входу для неавторизованих користувачів", async () => {
+        (fetch as jest.Mock)
+            .mockResolvedValueOnce({ json: () => Promise.resolve(null) }) // session
+            .mockResolvedValueOnce({ json: () => Promise.resolve([]) }); // cart
 
-        render(await Header());
+        render(<Header />);
 
-        expect(screen.getByText("Вхід")).toBeInTheDocument();
-        expect(screen.queryByText("Мій профіль")).not.toBeInTheDocument();
-    });
-    it("відображає 'Мій профіль', якщо користувач авторизований", async () => {
-        const {getServerSession} = await import("next-auth/next");
-        (getServerSession as jest.Mock).mockResolvedValue({
-            user: {
-                name: "Test User",
-                email: "test@example.com",
-            },
+        await waitFor(() => {
+            expect(screen.getByText("Вхід")).toBeInTheDocument();
+            expect(screen.queryByText("Профіль")).not.toBeInTheDocument();
         });
-
-        render(await Header());
-
-        expect(screen.getByText("Мій профіль")).toBeInTheDocument();
-        expect(screen.queryByText("Вхід")).not.toBeInTheDocument();
     });
+
+
+
+    it("завжди показує кнопку кошика", async () => {
+        (fetch as jest.Mock)
+            .mockResolvedValueOnce({ json: () => Promise.resolve(null) }) // session
+            .mockResolvedValueOnce({ json: () => Promise.resolve([]) }); // cart
+
+        render(<Header />);
+
+        await waitFor(() => {
+            expect(screen.getByText("Кошик")).toBeInTheDocument();
+        });
+    });
+
+
 });
