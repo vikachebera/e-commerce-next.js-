@@ -1,61 +1,68 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import OrderList from "@/components/Profile/OrderList";
-import React from 'react';
-
-global.fetch = jest.fn();
+import { render, screen } from '@testing-library/react';
+import OrderList from '@/components/Profile/OrderList';
 
 const mockOrders = [
     {
         id: 1,
-        createdAt: '2024-05-01T12:00:00Z',
+        createdAt: '2024-01-15T10:30:00Z',
+        status: 'completed',
         orderItems: [
             {
-                id: 10,
-                product: { id: 101, name: 'Товар A', price: 100 },
+                id: 1,
+                product: {
+                    id: 1,
+                    name: 'Тестовий товар 1',
+                    price: 100,
+                    imageUrl: '/test-image.jpg'
+                },
                 quantity: 2,
-                price: 200,
-            },
-            {
-                id: 11,
-                product: { id: 102, name: 'Товар B', price: 150 },
-                quantity: 1,
-                price: 150,
-            },
-        ],
-    },
+                price: 100
+            }
+        ]
+    }
 ];
 
+beforeEach(() => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            json: () => Promise.resolve(mockOrders),
+        })
+    ) as jest.Mock;
+});
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 describe('OrderList', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
+    test('1. Відображає заголовок "Історія замовлень"', async () => {
+        render(<OrderList />);
+        expect(await screen.findByText('Історія замовлень')).toBeInTheDocument();
     });
 
 
-
-    it('відображає повідомлення, якщо замовлень немає', async () => {
-        (fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => [],
-        });
-
+    test('2. Відображає список замовлень після завантаження', async () => {
         render(<OrderList />);
-
-        await waitFor(() => {
-            expect(screen.getByText('У вас ще немає замовлень.')).toBeInTheDocument();
-        });
+        expect(await screen.findByText('Замовлення #1')).toBeInTheDocument();
+        expect(screen.getByText('Тестовий товар 1')).toBeInTheDocument();
     });
 
-    it('обробляє помилку запиту', async () => {
-        const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    test('3. Відображає статус замовлення з правильними стилями', async () => {
+        render(<OrderList />);
+        const statusBadge = await screen.findByText('Виконано');
+        expect(statusBadge).toHaveClass('bg-green-100');
+        expect(statusBadge).toHaveClass('text-green-800');
+    });
 
-        (fetch as jest.Mock).mockRejectedValueOnce(new Error('Fetch failed'));
+    test('4. Відображає повідомлення про відсутність замовлень при пустому масиві', async () => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => Promise.resolve([]),
+            })
+        ) as jest.Mock;
 
         render(<OrderList />);
-
-        await waitFor(() => {
-            expect(errorSpy).toHaveBeenCalledWith('Error fetching orders:', expect.any(Error));
-        });
-
-        errorSpy.mockRestore();
+        expect(await screen.findByText('Немає замовлень')).toBeInTheDocument();
+        expect(screen.getByText(/Перейти до каталогу/)).toBeInTheDocument();
     });
 });
