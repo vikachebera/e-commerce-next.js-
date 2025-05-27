@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import { ShoppingCart, User} from "lucide-react";
+import {ShoppingCart, User} from "lucide-react";
 import type {Session} from "next-auth";
+import {Search} from "lucide-react";
+import { usePathname, useRouter } from 'next/navigation';
 
 type CartItem = {
     id: number;
@@ -11,9 +13,28 @@ type CartItem = {
     productId: number;
     userId: number;
 };
+
+
+
 export default function Header() {
     const [cartCount, setCartCount] = useState(0);
     const [session, setSession] = useState<Session | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (searchTerm.trim()) {
+            const encoded = encodeURIComponent(searchTerm);
+            if (!pathname.startsWith('/search')) {
+                router.push(`/search?q=${encoded}`);
+            } else {
+                router.push(`/search?q=${encoded}`);
+            }
+        }
+
+    }
 
     useEffect(() => {
         const loadSessionAndCart = async () => {
@@ -62,6 +83,24 @@ export default function Header() {
                         <span className="bg-indigo-600 text-white px-3 py-1 rounded-lg mr-2">TS</span>
                         Tech Space
                     </Link>
+                    <form
+                        onSubmit={handleSearchSubmit}
+                        className="relative"
+                    >
+                        <input
+                            type="text"
+                            placeholder="Пошук..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="px-3 py-2 rounded-lg border border-gray-300 outline-none ring-2 ring-indigo-500 w-36 sm:w-48 lg:w-64"
+                        />
+                        <button
+                            type="submit"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
+                        >
+                            <Search className="h-5 w-5"/>
+                        </button>
+                    </form>
 
                     <nav className="flex items-center space-x-2 sm:space-x-4">
                         {session?.user ? (

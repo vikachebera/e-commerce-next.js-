@@ -8,14 +8,14 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 export default function Carousel() {
     const images = [
-        '/assets/1.jpg',
+        '/assets/1.png',
         '/assets/2.jpg',
         '/assets/3.jpg',
         '/assets/4.jpg'
     ];
 
     return (
-        <div className="w-full h-[400px]"> {/* Додаємо фіксовану висоту */}
+        <div className="w-full h-[400px]">
             <Swiper
                 modules={[Navigation, Autoplay]}
                 spaceBetween={20}
@@ -25,7 +25,7 @@ export default function Carousel() {
                 navigation
                 autoplay={{ delay: 3000, disableOnInteraction: true }}
                 loop={true}
-                className="w-full h-full rounded-xl overflow-hidden" /* Додаємо overflow-hidden */
+                className="w-full h-full rounded-xl overflow-hidden"
             >
                 {images.map((src, i) => (
                     <SwiperSlide key={i}>

@@ -42,11 +42,10 @@ export default function FiltersPanel({
                         <option value="price-desc">За ціною (спадання)</option>
                         <option value="name-asc">За назвою (А-Я)</option>
                         <option value="name-desc">За назвою (Я-А)</option>
-                        <option value="rating">За рейтингом</option>
                     </select>
                 </div>
 
-\                <div>
+                <div>
                     <label className="block text-sm font-medium mb-1">Ціна</label>
                     <div className="flex gap-2">
                         <input

@@ -73,6 +73,7 @@ export default function CategoryProducts({category}: { category: Category }) {
 
     return (
         <div className="p-4">
+
             <h2 className="text-xl font-bold mb-4 text-center">{category.name}</h2>
             {products.length === 0 ? (
                 <>      <FiltersPanel

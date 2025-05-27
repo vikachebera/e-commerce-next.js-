@@ -9,7 +9,7 @@ interface ProductListProps {
 
 export default function ProductList({products}: ProductListProps) {
     return (
-        <div className="flex flex-row   w-full">
+        <div className="flex flex-row w-full justify-center flex-wrap ">
             {products.map((product) => (
                 <div key={product.id} className="w-1/5 m-1">
                     <Link href={`/product/${product.id}`}>
