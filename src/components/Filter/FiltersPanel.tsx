@@ -116,7 +116,6 @@ export default function FiltersPanel({
                     </div>
                 </div>
 
-                {/* In Stock Toggle */}
                 <div className="flex items-end">
                     <label className="flex items-center gap-3 cursor-pointer group p-3 -ml-3 rounded-xl hover:bg-amber-50/50 transition-all duration-200">
                         <div className="relative">
@@ -144,7 +143,6 @@ export default function FiltersPanel({
                     </label>
                 </div>
 
-                {/* Reset Button */}
                 <div className="flex items-end">
                     <button
                         onClick={onResetFiltersAction}

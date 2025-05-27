@@ -29,7 +29,7 @@ describe('FiltersPanel', () => {
             render(<FiltersPanel {...defaultProps} />);
 
             expect(screen.getByText('Сортування')).toBeInTheDocument();
-            expect(screen.getByText('Ціна')).toBeInTheDocument();
+            expect(screen.getByText('Діапазон цін')).toBeInTheDocument();
             expect(screen.getByText('Тільки в наявності')).toBeInTheDocument();
             expect(screen.getByText('Скинути фільтри')).toBeInTheDocument();
         });
@@ -50,17 +50,7 @@ describe('FiltersPanel', () => {
             expect(screen.getByText('За назвою (Я-А)')).toBeInTheDocument();
         });
 
-        it('відображає поля для введення ціни', () => {
-            render(<FiltersPanel {...defaultProps} />);
 
-            const minPriceInput = screen.getByPlaceholderText('Від');
-            const maxPriceInput = screen.getByPlaceholderText('До');
-
-            expect(minPriceInput).toBeInTheDocument();
-            expect(maxPriceInput).toBeInTheDocument();
-            expect(minPriceInput).toHaveAttribute('type', 'number');
-            expect(maxPriceInput).toHaveAttribute('type', 'number');
-        });
 
         it('відображає чекбокс "в наявності"', () => {
             render(<FiltersPanel {...defaultProps} />);
@@ -72,25 +62,48 @@ describe('FiltersPanel', () => {
     });
 
     describe('Відображення значень фільтрів', () => {
-        it('відображає встановлені значення цін', () => {
-            const propsWithPrices = {
-                ...defaultProps,
-                filterOptions: {
-                    minPrice: 100,
-                    maxPrice: 500,
-                    inStock: false,
-                },
-            };
-
-            render(<FiltersPanel {...propsWithPrices} />);
-
-            const minPriceInput = screen.getByPlaceholderText('Від');
-            const maxPriceInput = screen.getByPlaceholderText('До');
-
-            expect(minPriceInput).toHaveValue(100);
-            expect(maxPriceInput).toHaveValue(500);
+        it('змінює значення сортування', () => {
+            render(<FiltersPanel {...defaultProps} />);
+            fireEvent.change(screen.getByRole('combobox'), { target: { value: 'price-desc' } });
+            expect(mockOnSortChange).toHaveBeenCalledWith('price-desc');
         });
 
+        it('змінює мінімальну ціну', () => {
+            render(<FiltersPanel {...defaultProps} />);
+            fireEvent.change(screen.getByPlaceholderText('Мін'), {
+                target: { name: 'minPrice', value: '200' },
+            });
+            expect(mockOnFilterChange).toHaveBeenCalledWith({
+                ...defaultProps.filterOptions,
+                minPrice: 200,
+            });
+        });
+
+        it('змінює максимальну ціну', () => {
+            render(<FiltersPanel {...defaultProps} />);
+            fireEvent.change(screen.getByPlaceholderText('Макс'), {
+                target: { name: 'maxPrice', value: '1000' },
+            });
+            expect(mockOnFilterChange).toHaveBeenCalledWith({
+                ...defaultProps.filterOptions,
+                maxPrice: 1000,
+            });
+        });
+
+        it('змінює стан чекбоксу "в наявності"', () => {
+            render(<FiltersPanel {...defaultProps} />);
+            fireEvent.click(screen.getByRole('checkbox'));
+            expect(mockOnFilterChange).toHaveBeenCalledWith({
+                ...defaultProps.filterOptions,
+                inStock: true,
+            });
+        });
+
+        it('викликає функцію скидання фільтрів', () => {
+            render(<FiltersPanel {...defaultProps} />);
+            fireEvent.click(screen.getByRole('button', { name: /Скинути фільтри/i }));
+            expect(mockOnResetFilters).toHaveBeenCalledTimes(1);
+        });
         it('відображає відмічений чекбокс коли inStock = true', () => {
             const propsWithStock = {
                 ...defaultProps,
@@ -130,29 +143,7 @@ describe('FiltersPanel', () => {
             expect(mockOnSortChange).toHaveBeenCalledTimes(1);
         });
 
-        it('викликає onFilterChangeAction при зміні мінімальної ціни', () => {
-            render(<FiltersPanel {...defaultProps} />);
 
-            const minPriceInput = screen.getByPlaceholderText('Від');
-            fireEvent.change(minPriceInput, {target: {name: 'minPrice', value: '150'}});
-
-            expect(mockOnFilterChange).toHaveBeenCalledWith({
-                ...defaultProps.filterOptions,
-                minPrice: 150,
-            });
-        });
-
-        it('викликає onFilterChangeAction при зміні максимальної ціни', () => {
-            render(<FiltersPanel {...defaultProps} />);
-
-            const maxPriceInput = screen.getByPlaceholderText('До');
-            fireEvent.change(maxPriceInput, {target: {name: 'maxPrice', value: '300'}});
-
-            expect(mockOnFilterChange).toHaveBeenCalledWith({
-                ...defaultProps.filterOptions,
-                maxPrice: 300,
-            });
-        });
 
         it('викликає onFilterChangeAction при зміні чекбокса', () => {
             render(<FiltersPanel {...defaultProps} />);
