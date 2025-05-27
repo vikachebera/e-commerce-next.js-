@@ -15,7 +15,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
     if (!category) return <div>Категорію не знайдено</div>;
 
     return (
-        <div className="p-6">
+        <div className="p-6 m-6">
 
             <CategoryProducts category={category}/>
         </div>

@@ -22,7 +22,6 @@ describe('/api/categories API', () => {
             ];
             (prisma.category.findMany as jest.Mock).mockResolvedValue(mockCategories);
 
-            // Мок обʼєкта NextRequest з мінімальною реалізацією
             const req: Partial<NextRequest> = {};
 
             const res = await GET(req as NextRequest);

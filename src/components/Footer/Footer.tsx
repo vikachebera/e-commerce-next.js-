@@ -3,7 +3,7 @@ export default function Footer() {
     return (
         <footer className="bg-gray-900 text-gray-300 w-full mt-16">
             <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
                     <div>
                         <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Навігація</h3>
                         <ul className="space-y-3">
@@ -68,22 +68,6 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    <div>
-                        <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Розсилка</h3>
-                        <p className="text-gray-400 mb-4 text-sm">
-                            Підпишіться на наші оновлення та спеціальні пропозиції
-                        </p>
-                        <div className="flex">
-                            <input
-                                type="email"
-                                placeholder="Ваш email"
-                                className="px-4 py-2 w-full rounded-l-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
-                            />
-                            <button className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-r-md transition-colors duration-300">
-                                Підписатись
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 <div className="border-t border-gray-800 mt-12 pt-8">

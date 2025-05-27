@@ -59,7 +59,11 @@ export default function CategoryProducts({category}: { category: Category }) {
     }, [category?.id, sortOption, filters]);
 
     if (loading) {
-        <LoadingSpinner/>
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <LoadingSpinner/>
+            </div>
+        );
     }
 
     if (error) {
@@ -99,6 +103,7 @@ export default function CategoryProducts({category}: { category: Category }) {
                             setFilters({minPrice: undefined, maxPrice: undefined, inStock: false})
                         }
                     />
+
                     <ProductList products={products}/>
                 </>
             )}
