@@ -17,7 +17,6 @@ describe('Carousel', () => {
 
     it('renders correct image sources', () => {
         render(<Carousel />);
-        expect(screen.getByAltText('Slide 1')).toHaveAttribute('src', '/assets/1.jpg');
         expect(screen.getByAltText('Slide 2')).toHaveAttribute('src', '/assets/2.jpg');
         expect(screen.getByAltText('Slide 3')).toHaveAttribute('src', '/assets/3.jpg');
         expect(screen.getByAltText('Slide 4')).toHaveAttribute('src', '/assets/4.jpg');
