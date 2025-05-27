@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import ProductForm, {Product} from "@/components/AdminDashboard/ProductForm";
+import toast from "react-hot-toast";
 
 interface Category {
     id: number;
@@ -34,15 +35,27 @@ export default function ProductsManager() {
 
     };
     const handleDelete = async (product: Product) => {
-        const confirmed = confirm(`Are you sure you want to delete "${product.name}"?`);
+        const confirmed = window.confirm(`Ви впевнені, що хочете видалити: "${product.name}"?`);
         if (!confirmed) return;
 
-        await fetch(`/api/admin/products/${product.id}`, {
+        const res = await fetch(`/api/admin/products/${product.id}`, {
             method: "DELETE",
         });
 
-        handleFormSuccess();
+        if (res.ok) {
+            toast.success(`Товар "${product.name}" було успішно видалено`, {
+                duration: 3000,
+                position: "top-center",
+            });
+            handleFormSuccess();
+        } else {
+            toast.error(`Не вдалося видалити товар "${product.name}"`, {
+                duration: 3000,
+                position: "top-center",
+            });
+        }
     };
+
     const handleFormClose = () => {
         setShowForm(false);
     };
@@ -107,13 +120,13 @@ export default function ProductsManager() {
                                     onClick={() => handleEdit(prod)}
                                     className="p-2 m-2 gap-2 bg-green-500 text-white rounded"
                                 >
-                                    Edit
+                                    Редагувати
                                 </button>
                                 <button
                                     onClick={() => handleDelete(prod)}
                                     className="p-2 m-2 gap-2 bg-red-500 text-white rounded"
                                 >
-                                    Delete
+                                    Видалити
                                 </button>
                             </td>
                         </tr>

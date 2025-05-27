@@ -6,7 +6,7 @@ import OrderManager from "@/components/AdminDashboard/OrderManager";
 
 export default function AdminPage() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [activeSection, setActiveSection] = useState("dashboard");
+    const [activeSection, setActiveSection] = useState("products");
 
     const renderActiveSection = () => {
         switch (activeSection) {

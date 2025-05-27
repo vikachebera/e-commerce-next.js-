@@ -94,7 +94,7 @@ describe('ProductsManager', () => {
         (fetch as jest.Mock)
             .mockResolvedValueOnce({ ok: true, json: async () => mockProducts })
             .mockResolvedValueOnce({ ok: true, json: async () => mockCategories })
-            .mockResolvedValueOnce({ ok: true }) // delete
+            .mockResolvedValueOnce({ ok: true })
             .mockResolvedValueOnce({ ok: true, json: async () => mockProducts });
 
         render(<ProductsManager />);
@@ -103,7 +103,7 @@ describe('ProductsManager', () => {
             expect(screen.getByText('Product 1')).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getAllByText('Delete')[0]);
+        fireEvent.click(screen.getAllByText('Видалити')[0]);
 
         await waitFor(() => {
             expect(fetch).toHaveBeenCalledWith('/api/admin/products/1', expect.objectContaining({ method: 'DELETE' }));

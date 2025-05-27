@@ -47,24 +47,62 @@ const handlers = {
         }
     },
 
-    DELETE: async (req: NextRequest, {params}: { params: Promise<{ id: string }>}) =>
-{
-    const resolvedParams = await params;
+    DELETE: async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+        const resolvedParams = await params;
+        const productId = Number(resolvedParams.id);
 
-    try {
-        await prisma.cartItem.deleteMany({
-            where: {productId: Number(resolvedParams.id)},
-        });
-        await prisma.product.delete({
-            where: {id: Number(resolvedParams.id)},
-        });
+        try {
+            const product = await prisma.product.findUnique({
+                where: { id: productId },
+            });
 
-        return NextResponse.json({success: true});
-    } catch (error) {
-        console.error("Error deleting product:", error);
-        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+            if (!product) {
+                return NextResponse.json(
+                    { error: "Product not found" },
+                    { status: 404 }
+                );
+            }
+
+            await prisma.$transaction(async (tx) => {
+                await tx.cartItem.deleteMany({
+                    where: { productId },
+                });
+
+                await tx.orderItem.deleteMany({
+                    where: { productId },
+                });
+
+                await tx.product.delete({
+                    where: { id: productId },
+                });
+            });
+
+            return NextResponse.json(
+                { success: true, message: "Product deleted successfully" },
+                { status: 200 }
+            );
+        } catch (error) {
+            console.error("Error deleting product:", error);
+
+            let errorMessage = "Failed to delete product";
+            let statusCode = 500;
+
+            if (error instanceof Error) {
+                if (error.message.includes("foreign key constraint")) {
+                    errorMessage = "Cannot delete product - it's referenced in orders";
+                    statusCode = 400;
+                }
+            }
+
+            return NextResponse.json(
+                {
+                    error: errorMessage,
+                    details: error instanceof Error ? error.message : undefined
+                },
+                { status: statusCode }
+            );
+        }
     }
-}
 
 }
 

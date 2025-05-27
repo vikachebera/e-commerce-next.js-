@@ -1,8 +1,8 @@
 "use client"
 import {useState, useEffect} from "react";
-import  {Category} from "@/components/AdminDashboard/CategoryForm";
+import {Category} from "@/components/AdminDashboard/CategoryForm";
 import CategoryForm from "@/components/AdminDashboard/CategoryForm";
-
+import toast from "react-hot-toast";
 
 export default function CategoryManager() {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -29,12 +29,24 @@ export default function CategoryManager() {
 
     };
     const handleDelete = async (category: Category) => {
-        const confirmed = confirm(`Are you sure you want to delete "${category.name}"?`);
+        const confirmed = confirm(`Ви впевнені,що хочете видалити категорію: "${category.name}"?`);
         if (!confirmed) return;
-
-        await fetch(`/api/admin/categories/${category.id}`, {
+        const res = await fetch(`/api/admin/categories/${category.id}`, {
             method: "DELETE",
         });
+
+        if (res.ok) {
+            toast.success(`Товар "${category.name}" було успішно видалено`, {
+                duration: 3000,
+                position: "top-center",
+            });
+            handleFormClose();
+        } else {
+            toast.error(`Не вдалося видалити товар "${category.name}"`, {
+                duration: 3000,
+                position: "top-center",
+            });
+        }
         refreshCategories();
 
     };
@@ -58,7 +70,7 @@ export default function CategoryManager() {
         await fetch(url, {
             method,
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ name: category.name }),
+            body: JSON.stringify({name: category.name}),
         });
 
         handleFormClose();
