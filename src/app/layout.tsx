@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { getServerSession } from "next-auth";
 import  {authOptions} from "@/app/api/auth/[...nextauth]/options";
+import { Toaster } from 'react-hot-toast';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const session = await getServerSession(authOptions);
@@ -15,6 +16,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {!isAdmin && <Header />}
         {children}
         {!isAdmin && <Footer />}
+        <Toaster position="top-center" />
         </body>
         </html>
     );

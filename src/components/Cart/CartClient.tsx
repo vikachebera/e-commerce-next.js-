@@ -1,8 +1,9 @@
 'use client';
 
 import {CartItem, Product, User} from "@prisma/client";
-import {useState,useEffect} from "react";
+import {useState, useEffect} from "react";
 import Link from "next/link";
+import toast from 'react-hot-toast';
 
 type CartWithProduct = CartItem & { product: Product | null, user: User };
 
@@ -85,11 +86,17 @@ export default function CartClient({initialCart}: { initialCart: CartWithProduct
             if (!clearCartResponse.ok) throw new Error('Помилка очищення кошика');
             setItems([]);
             updateCartCounter();
+            toast.success('Замовлення успішно оформлено!', {
+                duration: 4000,
+                position: 'top-center',
+            })
 
-            alert('Замовлення успішно оформлено!');
         } catch (error) {
             console.error(error);
-            alert('Не вдалося оформити замовлення');
+            toast.error('Не вдалося оформити замовлення', {
+                duration: 4000,
+                position: "top-center",
+            });
         }
     };
 
