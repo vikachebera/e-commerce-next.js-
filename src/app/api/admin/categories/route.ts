@@ -3,7 +3,8 @@ import {NextRequest, NextResponse} from "next/server";
 
 
 const handler = {
-    GET: async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    GET: async (req: NextRequest) => {
         try {
             const categories = await prisma.category.findMany();
             return NextResponse.json(categories, {status: 200});
